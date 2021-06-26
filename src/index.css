@@ -20,14 +20,32 @@ code {
 }
 
 .card {
-  margin: 10px;
+  margin-bottom: 15px;
+  margin-right: 4px;
+  margin-left: 4px;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-  width: 296px;
+  /* width: 275px; */
 }
 
 .card:hover {
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -2px rgb(0 0 0 / 5%);
 }
 
-.main-container {
+/* .card-margin {
+  padding: 10px;
+} */
+
+/* .main-container {
+}
+
+@media screen and (max-width: 480px) {
+  .card {
+  }
+} */
+
+/* large size */
+@media (min-width: 992px) {
+  .card {
+    width: 275px;
+  }
 }
