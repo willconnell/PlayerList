@@ -1,31 +1,33 @@
 import React from "react";
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   return (
     <div className="leftnav bg-light col-3">
       <h3>Navigation</h3>
       <p>
-        <button className="btn btn-primary">Add Song</button>
+        <button className="btn btn-primary" onClick={props.toggle}>
+          Add Song
+        </button>
       </p>
 
-      <ul class="list-group">
-        <button class="list-group-item d-flex justify-content-between align-items-center">
+      <ul className="list-group">
+        <button className="list-group-item d-flex justify-content-between align-items-center">
           A list item
-          <span class="badge bg-primary rounded-pill">14</span>
+          <span className="badge bg-primary rounded-pill">14</span>
         </button>
-        <button class="list-group-item d-flex justify-content-between align-items-center">
+        <button className="list-group-item d-flex justify-content-between align-items-center">
           A second list item
-          <span class="badge bg-primary rounded-pill">2</span>
+          <span className="badge bg-primary rounded-pill">2</span>
         </button>
-        <button class="list-group-item d-flex justify-content-between align-items-center">
+        <button className="list-group-item d-flex justify-content-between align-items-center">
           A third list item
-          <span class="badge bg-primary rounded-pill">1</span>
+          <span className="badge bg-primary rounded-pill">1</span>
         </button>
       </ul>
 
-      <div class="list-group" id="list-tab" role="tablist">
+      <div className="list-group" id="list-tab" role="tablist">
         <button
-          class="list-group-item list-group-item-action active"
+          className="list-group-item list-group-item-action active"
           id="list-home-list"
           data-bs-toggle="list"
           href="#list-home"
@@ -35,7 +37,7 @@ const Sidebar = () => {
           Home
         </button>
         <button
-          class="list-group-item list-group-item-action"
+          className="list-group-item list-group-item-action"
           id="list-profile-list"
           data-bs-toggle="list"
           href="#list-profile"
@@ -45,7 +47,7 @@ const Sidebar = () => {
           Profile
         </button>
         <button
-          class="list-group-item list-group-item-action"
+          className="list-group-item list-group-item-action"
           id="list-messages-list"
           data-bs-toggle="list"
           href="#list-messages"
@@ -55,7 +57,7 @@ const Sidebar = () => {
           Messages
         </button>
         <button
-          class="list-group-item list-group-item-action"
+          className="list-group-item list-group-item-action"
           id="list-settings-list"
           data-bs-toggle="list"
           href="#list-settings"
