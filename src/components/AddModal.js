@@ -88,34 +88,63 @@ const AddModal = (props) => {
           <input
             className="form-check-input"
             type="radio"
-            id="learning"
+            id="radio-learning"
             name="status"
             value="In Progress"
             onChange={(e) => setStatus(e.target.value)}
           />
-          <label htmlFor="learning">Learning In Progress</label>
+          <label htmlFor="radio-learning">Learning In Progress</label>
           <br />
           <input
             className="form-check-input"
             type="radio"
-            id="tolearn"
+            id="radio-tolearn"
             name="status"
             value="To Learn"
             onChange={(e) => setStatus(e.target.value)}
-            checked
           />
-          <label htmlFor="tolearn">Want to Learn</label>
+          <label htmlFor="radio-tolearn">Want to Learn</label>
           <br />
           <input
             className="form-check-input"
             type="radio"
-            id="learned"
+            id="radio-learned"
             name="status"
             value="Learned"
             onChange={(e) => setStatus(e.target.value)}
           />
-          <label htmlFor="learned">Learned</label>
+          <label htmlFor="radio-learned">Learned</label>
         </div>
+
+        {/* <label className="form-label">Status:</label>
+        <div className="form-check">
+          <input
+            type="radio"
+            id="learning"
+            name="fav_status"
+            value="In Progress"
+            onChange={(e) => setStatus(e.target.value)}
+          />
+          <label for="learning"> Learning In Progress</label>
+          <br />
+          <input
+            type="radio"
+            id="tolearn"
+            name="fav_status"
+            value="To Learn"
+            onChange={(e) => setStatus(e.target.value)}
+          />
+          <label for="tolearn"> Want to Learn</label>
+          <br />
+          <input
+            type="radio"
+            id="learned"
+            name="fav_status"
+            value="Learned"
+            onChange={(e) => setStatus(e.target.value)}
+          />
+          <label for="learned"> Learned</label>
+        </div> */}
 
         <div className="mb-3">
           <label htmlFor="exampleFormControlTextarea1" className="form-label">
