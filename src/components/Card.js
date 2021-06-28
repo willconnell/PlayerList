@@ -15,18 +15,26 @@ const Card = (props) => {
       <ul className="list-group list-group-flush">
         <li className="list-group-item">
           {" "}
-          <a href="#link" className="card-link">
+          <a
+            href={props.chords}
+            target={props.chords != "" ? "_blank" : ""}
+            className="card-link"
+          >
             Chords / Tabs
           </a>
         </li>
         <li className="list-group-item">
           {" "}
-          <a href="#link" className="card-link">
+          <a
+            href={props.youtube}
+            target={props.youtube != "" ? "_blank" : ""}
+            className="card-link"
+          >
             Youtube
           </a>
         </li>
         <li className="list-group-item">Lyrics Available</li>
-        <li className="list-group-item">Learning Status</li>
+        <li className="list-group-item">Status: {props.status}</li>
       </ul>
     </div>
   );

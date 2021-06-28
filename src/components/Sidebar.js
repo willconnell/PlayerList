@@ -1,4 +1,5 @@
 import React from "react";
+import StatusList from "./StatusList.js";
 
 const Sidebar = (props) => {
   return (
@@ -10,22 +11,9 @@ const Sidebar = (props) => {
         </button>
       </p>
 
-      <ul className="list-group">
-        <button className="list-group-item d-flex justify-content-between align-items-center">
-          A list item
-          <span className="badge bg-primary rounded-pill">14</span>
-        </button>
-        <button className="list-group-item d-flex justify-content-between align-items-center">
-          A second list item
-          <span className="badge bg-primary rounded-pill">2</span>
-        </button>
-        <button className="list-group-item d-flex justify-content-between align-items-center">
-          A third list item
-          <span className="badge bg-primary rounded-pill">1</span>
-        </button>
-      </ul>
+      <StatusList />
 
-      <div className="list-group" id="list-tab" role="tablist">
+      <div className="list-group mt-3" id="list-tab" role="tablist">
         <button
           className="list-group-item list-group-item-action active"
           id="list-home-list"
