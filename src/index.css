@@ -83,6 +83,15 @@ code {
   font-size: x-large;
 }
 
+.hidden {
+  color: white;
+  cursor: default;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
 .card-link {
   color: rgb(52, 52, 52);
 }

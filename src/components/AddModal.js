@@ -45,6 +45,7 @@ const AddModal = (props) => {
             id="exampleFormControlInput1"
             placeholder="Something"
             onChange={(e) => setSongName(e.target.value)}
+            required
           />
         </div>
         <div className="mb-3">
@@ -57,6 +58,7 @@ const AddModal = (props) => {
             id="exampleFormControlInput1"
             placeholder="The Beatles"
             onChange={(e) => setArtist(e.target.value)}
+            required
           />
         </div>
         <div className="mb-3">
@@ -80,6 +82,7 @@ const AddModal = (props) => {
             className="form-control"
             id="exampleFormControlInput1"
             placeholder="http://example.com"
+            onChange={(e) => setYoutube(e.target.value)}
           />
         </div>
 
@@ -116,36 +119,6 @@ const AddModal = (props) => {
           <label htmlFor="radio-learned">Learned</label>
         </div>
 
-        {/* <label className="form-label">Status:</label>
-        <div className="form-check">
-          <input
-            type="radio"
-            id="learning"
-            name="fav_status"
-            value="In Progress"
-            onChange={(e) => setStatus(e.target.value)}
-          />
-          <label for="learning"> Learning In Progress</label>
-          <br />
-          <input
-            type="radio"
-            id="tolearn"
-            name="fav_status"
-            value="To Learn"
-            onChange={(e) => setStatus(e.target.value)}
-          />
-          <label for="tolearn"> Want to Learn</label>
-          <br />
-          <input
-            type="radio"
-            id="learned"
-            name="fav_status"
-            value="Learned"
-            onChange={(e) => setStatus(e.target.value)}
-          />
-          <label for="learned"> Learned</label>
-        </div> */}
-
         <div className="mb-3">
           <label htmlFor="exampleFormControlTextarea1" className="form-label">
             Notes
@@ -155,6 +128,7 @@ const AddModal = (props) => {
             id="exampleFormControlTextarea1"
             rows="3"
             placeholder="Notes"
+            onChange={(e) => setNotes(e.target.value)}
           ></textarea>
         </div>
         <button

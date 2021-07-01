@@ -11,7 +11,7 @@ const Sidebar = (props) => {
         </button>
       </p>
 
-      <StatusList />
+      <StatusList allLen={props.allLen} />
 
       <div className="list-group mt-3" id="list-tab" role="tablist">
         <button

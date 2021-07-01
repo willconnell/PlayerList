@@ -1,8 +1,12 @@
 import React from "react";
 
 const Card = (props) => {
+  const onClick = () => {
+    props.toggle(props.id);
+  };
+
   return (
-    <div className="card">
+    <div className="card clickable" onClick={onClick}>
       <div className="card-body">
         <h5 className="card-title">{props.name}</h5>
         <h6 className="card-subtitle">by {props.artist}</h6>
@@ -17,7 +21,8 @@ const Card = (props) => {
           {" "}
           <a
             href={props.chords}
-            target={props.chords != "" ? "_blank" : ""}
+            target={props.chords !== "" ? "_blank" : ""}
+            rel="noreferrer"
             className="card-link"
           >
             Chords / Tabs
@@ -27,7 +32,8 @@ const Card = (props) => {
           {" "}
           <a
             href={props.youtube}
-            target={props.youtube != "" ? "_blank" : ""}
+            target={props.youtube !== "" ? "_blank" : ""}
+            rel="noreferrer"
             className="card-link"
           >
             Youtube

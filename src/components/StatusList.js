@@ -1,17 +1,17 @@
 import React from "react";
-import { useState } from "react";
+// import { useState } from "react";
 
-const StatusList = () => {
-  const [numAll, setNumAll] = useState(0);
-  const [numLearning, setNumLearning] = useState(0);
-  const [numToLearn, setNumToLearn] = useState(0);
-  const [numLearned, setNumLearned] = useState(0);
+const StatusList = (props) => {
+  // const [numAll, setNumAll] = useState(0);
+  // const [numLearning, setNumLearning] = useState(0);
+  // const [numToLearn, setNumToLearn] = useState(0);
+  // const [numLearned, setNumLearned] = useState(0);
 
   return (
     <ul className="list-group">
       <button className="slist list-group-item d-flex justify-content-between align-items-center">
         All
-        <span className="badge bg-primary rounded-pill">14</span>
+        <span className="badge bg-primary rounded-pill">{props.allLen}</span>
       </button>
       <button className="slist list-group-item d-flex justify-content-between align-items-center">
         Learning In Progress

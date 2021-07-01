@@ -5,13 +5,14 @@ const Cards = (props) => {
     <>
       {props.songs.map((song) => (
         <Card
-          key={song.id}
+          id={song.id}
           name={song.name}
           artist={song.artist}
           chords={song.chords}
           youtube={song.youtube}
           status={song.status}
           lyrics={song.lyrics}
+          toggle={props.toggle}
         />
       ))}
     </>

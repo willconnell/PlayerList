@@ -3,23 +3,18 @@ import { useState } from "react";
 import Sidebar from "./components/Sidebar.js";
 import Cards from "./components/Cards.js";
 import Heading from "./components/Heading.js";
-
 import AddModal from "./components/AddModal.js";
+import ViewCard from "./components/ViewCard";
+// import ViewCard from "./components/ViewCard.js";
 
 function App() {
   const [addShowing, setAddShowing] = useState(false);
+  const [viewCardShowing, setViewCardShowing] = useState(false);
+  const [viewableSong, setViewableSong] = useState("");
+  // const [numLearned, setNumLearned] = useState(0);
+  // const [numToLearn, setNumToLearn] = useState(0);
+  // const [numLearning, setNumLearning] = useState(0);
   const [songs, setSongs] = useState([
-    {
-      id: 1,
-      name: "Something",
-      artist: "The Beatles",
-      chords:
-        "https://tabs.ultimate-guitar.com/tab/the-beatles/something-chords-335727",
-      youtube: "https://www.youtube.com/watch?v=UelDrZ1aFeY",
-      status: "Learned",
-      notes: "",
-      lyrics: "",
-    },
     {
       id: 2,
       name: "Neon",
@@ -52,10 +47,32 @@ function App() {
       notes: "",
       lyrics: "",
     },
+    {
+      id: 1,
+      name: "Something",
+      artist: "The Beatles",
+      chords:
+        "https://tabs.ultimate-guitar.com/tab/the-beatles/something-chords-335727",
+      youtube: "https://www.youtube.com/watch?v=UelDrZ1aFeY",
+      status: "Learned",
+      notes: "",
+      lyrics: "",
+    },
   ]);
 
   const toggleAddShowing = () => {
     setAddShowing(!addShowing);
+  };
+
+  const toggleViewCard = (id) => {
+    setViewCardShowing(!viewCardShowing);
+    // fetch song data by id and store in viewableSong
+    songs.map((song) => {
+      if (song.id === id) {
+        setViewableSong(song);
+      }
+    });
+    // console.log(songs.id);
   };
 
   const saveSong = () => {
@@ -83,7 +100,10 @@ function App() {
 
   return (
     <div className="App">
-      <Sidebar toggle={toggleAddShowing} />
+      <Sidebar toggle={toggleAddShowing} allLen={songs.length} />
+      {viewCardShowing && (
+        <ViewCard toggle={toggleViewCard} song={viewableSong} />
+      )}
       {addShowing && (
         <AddModal
           toggle={toggleAddShowing}
@@ -95,7 +115,7 @@ function App() {
       <Heading />
       <div className="container">
         <div className="row cards-container offset-3 d-flex">
-          <Cards songs={songs} />
+          <Cards songs={songs} toggle={toggleViewCard} />
           {/* {songs.length === 0 ? (
             <p>No Songs to Show</p>
           ) : (
