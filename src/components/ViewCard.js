@@ -4,7 +4,7 @@ import { BsX } from "react-icons/bs";
 const ViewCard = (props) => {
   return (
     <>
-      <div className="backdrop" />
+      <div className="backdrop" onClick={props.exit} />
       <div className="addmodal">
         <div className="modalheading d-flex justify-content-between">
           <span />
@@ -17,29 +17,20 @@ const ViewCard = (props) => {
           {/* keep modalX here for consistent layout, but make it invisible and non-functional */}
           <BsX className="modalX hidden" />
         </div>
-        <p>Link to Chords Badge</p>
-        <p>Embedded youtube video</p>
+        {/* <iframe src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"></iframe> */}
+        <iframe width="100%" height="345" src={props.song.youtube}></iframe>
+
+        <button className="btn btn-outline-dark">Chords / Tabs</button>
+        <br />
+        {/* {make ^this open into a new window} */}
         <p>Lyrics in a nice format; use Lorem ipsum</p>
-        <p>Mark as Learned button</p>
-        <p>Edit button</p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum
-        </p>
+        <p>Notes</p>
+        <p>Mark as Learned button functionality</p>
+        <p>Edit button functionality</p>
+        <div className="d-flex">
+          <button className="btn btn-secondary m-1">Edit</button>
+          <button className="btn btn-light m-1">Mark as Learned</button>
+        </div>
       </div>
     </>
   );

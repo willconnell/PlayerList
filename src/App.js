@@ -20,7 +20,7 @@ function App() {
       name: "Neon",
       artist: "John Mayer",
       chords: "https://tabs.ultimate-guitar.com/tab/john-mayer/neon-tabs-48164",
-      youtube: "https://www.youtube.com/watch?v=_DfQC5qHhbo",
+      youtube: "https://www.youtube.com/embed/_DfQC5qHhbo",
       status: "In Progress",
       notes: "",
       lyrics: "",
@@ -31,7 +31,7 @@ function App() {
       artist: "Stevie Ray Vaughn",
       chords:
         "https://tabs.ultimate-guitar.com/tab/stevie-ray-vaughan-double-trouble/pride-and-joy-tabs-30829",
-      youtube: "https://www.youtube.com/watch?v=0vo23H9J8o8",
+      youtube: "https://www.youtube.com/embed/0vo23H9J8o8",
       status: "In Progress",
       notes: "",
       lyrics: "",
@@ -42,7 +42,7 @@ function App() {
       artist: "Red Hot Chili Peppers",
       chords:
         "https://tabs.ultimate-guitar.com/tab/red-hot-chili-peppers/under-the-bridge-tabs-3832",
-      youtube: "https://www.youtube.com/watch?v=lwlogyj7nFE",
+      youtube: "https://www.youtube.com/embed/lwlogyj7nFE",
       status: "Learned",
       notes: "",
       lyrics: "",
@@ -53,7 +53,7 @@ function App() {
       artist: "The Beatles",
       chords:
         "https://tabs.ultimate-guitar.com/tab/the-beatles/something-chords-335727",
-      youtube: "https://www.youtube.com/watch?v=UelDrZ1aFeY",
+      youtube: "https://www.youtube.com/embed/UelDrZ1aFeY",
       status: "Learned",
       notes: "",
       lyrics: "",
@@ -73,6 +73,10 @@ function App() {
       }
     });
     // console.log(songs.id);
+  };
+
+  const exitViewCard = () => {
+    setViewCardShowing(false);
   };
 
   const saveSong = () => {
@@ -102,7 +106,11 @@ function App() {
     <div className="App">
       <Sidebar toggle={toggleAddShowing} allLen={songs.length} />
       {viewCardShowing && (
-        <ViewCard toggle={toggleViewCard} song={viewableSong} />
+        <ViewCard
+          toggle={toggleViewCard}
+          song={viewableSong}
+          exit={exitViewCard}
+        />
       )}
       {addShowing && (
         <AddModal

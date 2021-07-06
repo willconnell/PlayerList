@@ -12,13 +12,16 @@ const AddModal = (props) => {
   const [lyrics, setLyrics] = useState("");
 
   const onSubmit = (e) => {
-    // e.preventDefault();
+    // convert youtube link to embed link
+    const code = youtube.slice(-11);
+    const newlink = "https://www.youtube.com/embed/" + code;
+
     const song = {
       id: Math.random() * 10 + 1,
       name: songName,
       artist: artist,
       chords: chords,
-      youtube: youtube,
+      youtube: newlink,
       status: status,
       notes: notes,
       lyrics: lyrics,
@@ -87,14 +90,14 @@ const AddModal = (props) => {
         </div>
 
         <label className="form-label">Status:</label>
-        <div className="form-check">
+        <div className="form-check" onChange={(e) => setStatus(e.target.value)}>
           <input
             className="form-check-input"
             type="radio"
             id="radio-learning"
             name="status"
             value="In Progress"
-            onChange={(e) => setStatus(e.target.value)}
+            checked
           />
           <label htmlFor="radio-learning">Learning In Progress</label>
           <br />
@@ -104,7 +107,6 @@ const AddModal = (props) => {
             id="radio-tolearn"
             name="status"
             value="To Learn"
-            onChange={(e) => setStatus(e.target.value)}
           />
           <label htmlFor="radio-tolearn">Want to Learn</label>
           <br />
@@ -114,7 +116,6 @@ const AddModal = (props) => {
             id="radio-learned"
             name="status"
             value="Learned"
-            onChange={(e) => setStatus(e.target.value)}
           />
           <label htmlFor="radio-learned">Learned</label>
         </div>
