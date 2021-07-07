@@ -1,8 +1,9 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BsX } from "react-icons/bs";
 
-const AddModal = (props) => {
+const EditModal = (props) => {
+  const [songid, setSongid] = useState("");
   const [songName, setSongName] = useState("");
   const [artist, setArtist] = useState("");
   const [chords, setChords] = useState("");
@@ -11,13 +12,27 @@ const AddModal = (props) => {
   const [notes, setNotes] = useState("");
   const [lyrics, setLyrics] = useState("");
 
+  // the first time the modal is rendered, set song parameters (so they're not empty)
+  useEffect(() => {
+    console.log("EFFECT RUNNING");
+    setSongid(props.song.id);
+    setSongName(props.song.name);
+    setArtist(props.song.artist);
+    setChords(props.song.chords);
+    setYoutube(props.song.youtube);
+    setStatus(props.song.status);
+    setNotes(props.song.notes);
+    setLyrics(props.song.lyrics);
+  }, []);
+
   const onSubmit = (e) => {
+    e.preventDefault();
     // convert youtube link to embed link
     const code = youtube.slice(-11);
     const newlink = "https://www.youtube.com/embed/" + code;
 
     const song = {
-      id: Math.random() * 10 + 1,
+      id: songid,
       name: songName,
       artist: artist,
       chords: chords,
@@ -26,7 +41,9 @@ const AddModal = (props) => {
       notes: notes,
       lyrics: lyrics,
     };
-    props.onAddSong(song);
+
+    props.saveChanges(song);
+    props.toggle();
   };
 
   return (
@@ -35,7 +52,7 @@ const AddModal = (props) => {
       <form className="addmodal" onSubmit={onSubmit}>
         <div className="modalheading d-flex justify-content-between">
           <span />
-          <h1 style={{ textAlign: "center" }}>Add a Song</h1>
+          <h1 style={{ textAlign: "center" }}>Edit Song</h1>
           <BsX className="modalX" onClick={props.toggle} />
         </div>
         <div className="mb-3">
@@ -46,6 +63,7 @@ const AddModal = (props) => {
             type="text"
             className="form-control"
             id="exampleFormControlInput1"
+            defaultValue={props.song.name}
             placeholder="Something"
             onChange={(e) => setSongName(e.target.value)}
             required
@@ -59,6 +77,7 @@ const AddModal = (props) => {
             type="text"
             className="form-control"
             id="exampleFormControlInput1"
+            defaultValue={props.song.artist}
             placeholder="The Beatles"
             onChange={(e) => setArtist(e.target.value)}
             required
@@ -73,6 +92,7 @@ const AddModal = (props) => {
             className="form-control"
             id="exampleFormControlInput1"
             placeholder="http://example.com"
+            defaultValue={props.song.chords}
             onChange={(e) => setChords(e.target.value)}
           />
         </div>
@@ -80,43 +100,87 @@ const AddModal = (props) => {
           <label htmlFor="exampleFormControlInput1" className="form-label">
             Link to Youtube
           </label>
-          <input
-            type="text"
-            className="form-control"
-            id="exampleFormControlInput1"
-            placeholder="http://example.com"
-            onChange={(e) => setYoutube(e.target.value)}
-          />
+          {props.song.youtube !== "https://www.youtube.com/embed/" ? (
+            <input
+              type="text"
+              className="form-control"
+              id="exampleFormControlInput1"
+              defaultValue={props.song.youtube}
+              placeholder="http://example.com"
+              onChange={(e) => setYoutube(e.target.value)}
+            />
+          ) : (
+            <input
+              type="text"
+              className="form-control"
+              id="exampleFormControlInput1"
+              placeholder="http://example.com"
+              onChange={(e) => setYoutube(e.target.value)}
+            />
+          )}
         </div>
 
         <label className="form-label">Status:</label>
         <div className="form-check" onChange={(e) => setStatus(e.target.value)}>
-          <input
-            className="form-check-input"
-            type="radio"
-            id="radio-learning"
-            name="status"
-            value="In Progress"
-          />
+          {props.song.status === "In Progress" ? (
+            <input
+              className="form-check-input"
+              type="radio"
+              id="radio-learning"
+              name="status"
+              value="In Progress"
+              defaultChecked
+            />
+          ) : (
+            <input
+              className="form-check-input"
+              type="radio"
+              id="radio-learning"
+              name="status"
+              value="In Progress"
+            />
+          )}
           <label htmlFor="radio-learning">Learning In Progress</label>
           <br />
-          <input
-            className="form-check-input"
-            type="radio"
-            id="radio-tolearn"
-            name="status"
-            value="To Learn"
-            defaultChecked
-          />
+
+          {props.song.status === "To Learn" ? (
+            <input
+              className="form-check-input"
+              type="radio"
+              id="radio-tolearn"
+              name="status"
+              value="To Learn"
+              defaultChecked
+            />
+          ) : (
+            <input
+              className="form-check-input"
+              type="radio"
+              id="radio-tolearn"
+              name="status"
+              value="To Learn"
+            />
+          )}
           <label htmlFor="radio-tolearn">Want to Learn</label>
           <br />
-          <input
-            className="form-check-input"
-            type="radio"
-            id="radio-learned"
-            name="status"
-            value="Learned"
-          />
+          {props.song.status === "Learned" ? (
+            <input
+              className="form-check-input"
+              type="radio"
+              id="radio-learned"
+              name="status"
+              value="Learned"
+              defaultChecked
+            />
+          ) : (
+            <input
+              className="form-check-input"
+              type="radio"
+              id="radio-learned"
+              name="status"
+              value="Learned"
+            />
+          )}
           <label htmlFor="radio-learned">Learned</label>
         </div>
 
@@ -128,6 +192,7 @@ const AddModal = (props) => {
             className="form-control"
             id="exampleFormControlTextarea1"
             rows="3"
+            defaultValue={props.song.notes}
             placeholder="Notes"
             onChange={(e) => setNotes(e.target.value)}
           ></textarea>
@@ -147,4 +212,4 @@ const AddModal = (props) => {
   );
 };
 
-export default AddModal;
+export default EditModal;

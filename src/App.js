@@ -4,13 +4,15 @@ import Sidebar from "./components/Sidebar.js";
 import Cards from "./components/Cards.js";
 import Heading from "./components/Heading.js";
 import AddModal from "./components/AddModal.js";
-import ViewCard from "./components/ViewCard";
+import ViewCard from "./components/ViewCard.js";
+import EditModal from "./components/EditModal.js";
 // import ViewCard from "./components/ViewCard.js";
 
 function App() {
   const [addShowing, setAddShowing] = useState(false);
   const [viewCardShowing, setViewCardShowing] = useState(false);
   const [viewableSong, setViewableSong] = useState("");
+  const [editShowing, setEditShowing] = useState(true);
   // const [numLearned, setNumLearned] = useState(0);
   // const [numToLearn, setNumToLearn] = useState(0);
   // const [numLearning, setNumLearning] = useState(0);
@@ -43,7 +45,7 @@ function App() {
       chords:
         "https://tabs.ultimate-guitar.com/tab/red-hot-chili-peppers/under-the-bridge-tabs-3832",
       youtube: "https://www.youtube.com/embed/lwlogyj7nFE",
-      status: "Learned",
+      status: "To Learn",
       notes: "",
       lyrics: "",
     },
@@ -64,6 +66,10 @@ function App() {
     setAddShowing(!addShowing);
   };
 
+  const toggleEditShowing = () => {
+    setEditShowing(!editShowing);
+  };
+
   const toggleViewCard = (id) => {
     setViewCardShowing(!viewCardShowing);
     // fetch song data by id and store in viewableSong
@@ -77,11 +83,6 @@ function App() {
 
   const exitViewCard = () => {
     setViewCardShowing(false);
-  };
-
-  const saveSong = () => {
-    setAddShowing(!addShowing);
-    console.log("save new song info");
   };
 
   const addSong = (song) => {
@@ -102,21 +103,44 @@ function App() {
     ]);
   };
 
+  const saveEditedSong = (newSong) => {
+    console.log(newSong);
+
+    songs.map((song) => {
+      if (song.id === newSong.id) {
+        song.name = newSong.name;
+        song.artist = newSong.artist;
+        song.chords = newSong.chords;
+        song.youtube = newSong.youtube;
+        song.status = newSong.status;
+        song.notes = newSong.notes;
+        song.lyrics = newSong.lyrics;
+      }
+    });
+
+    console.log(songs);
+  };
+
   return (
     <div className="App">
       <Sidebar toggle={toggleAddShowing} allLen={songs.length} />
       {viewCardShowing && (
         <ViewCard
           toggle={toggleViewCard}
+          toggleEdit={toggleEditShowing}
           song={viewableSong}
           exit={exitViewCard}
         />
       )}
-      {addShowing && (
-        <AddModal
-          toggle={toggleAddShowing}
-          save={saveSong}
+      {addShowing && <AddModal toggle={toggleAddShowing} onAddSong={addSong} />}
+
+      {editShowing && (
+        <EditModal
+          toggle={toggleEditShowing}
+          // probably will need to edit this so it doesn't create an entire new song
           onAddSong={addSong}
+          song={viewableSong}
+          saveChanges={saveEditedSong}
         />
       )}
 
