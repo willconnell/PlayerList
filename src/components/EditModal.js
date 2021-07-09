@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { BsX } from "react-icons/bs";
+import { BsX, BsTrash } from "react-icons/bs";
 
 const EditModal = (props) => {
   const [songid, setSongid] = useState("");
@@ -27,7 +27,14 @@ const EditModal = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // convert youtube link to embed link
+
+    // if (youtube != "https://www.youtube.com/embed/") {
+    //   const code = youtube.slice(-11);
+    //   const newlink = "https://www.youtube.com/embed/" + code;
+    // } else {
+    //   const newlink = "";
+    // }
+
     const code = youtube.slice(-11);
     const newlink = "https://www.youtube.com/embed/" + code;
 
@@ -44,6 +51,10 @@ const EditModal = (props) => {
 
     props.saveChanges(song);
     props.toggle();
+  };
+
+  const onDelete = () => {
+    console.log("Song Deleted!");
   };
 
   return (
@@ -199,10 +210,14 @@ const EditModal = (props) => {
         </div>
         <button
           type="button"
-          className="btn btn-danger m-2"
+          className="btn btn-secondary m-2"
           onClick={props.toggle}
         >
-          Discard
+          Cancel
+        </button>
+        <button className="btn btn-danger m-2" onClick={onDelete}>
+          <BsTrash style={{ marginRight: "5px" }} />
+          Delete Song
         </button>
         <button type="submit" className="btn btn-success m-2">
           Save Changes

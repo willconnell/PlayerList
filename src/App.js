@@ -1,21 +1,22 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "./components/Sidebar.js";
 import Cards from "./components/Cards.js";
 import Heading from "./components/Heading.js";
 import AddModal from "./components/AddModal.js";
 import ViewCard from "./components/ViewCard.js";
 import EditModal from "./components/EditModal.js";
-// import ViewCard from "./components/ViewCard.js";
 
 function App() {
   const [addShowing, setAddShowing] = useState(false);
   const [viewCardShowing, setViewCardShowing] = useState(false);
   const [viewableSong, setViewableSong] = useState("");
-  const [editShowing, setEditShowing] = useState(true);
-  // const [numLearned, setNumLearned] = useState(0);
-  // const [numToLearn, setNumToLearn] = useState(0);
-  // const [numLearning, setNumLearning] = useState(0);
+  const [editShowing, setEditShowing] = useState(false);
+  const [count, setCount] = useState({
+    learned: 0,
+    tolearn: 0,
+    learning: 0,
+  });
   const [songs, setSongs] = useState([
     {
       id: 2,
@@ -61,6 +62,29 @@ function App() {
       lyrics: "",
     },
   ]);
+
+  // run code first time the App is rendered, and everytime song state changes
+  useEffect(() => {
+    let tolearn = 0;
+    let learning = 0;
+    let learned = 0;
+
+    songs.map((song) => {
+      if (song.status == "To Learn") {
+        tolearn += 1;
+      } else if (song.status == "In Progress") {
+        learning += 1;
+      } else if (song.status == "Learned") {
+        learned += 1;
+      }
+    });
+
+    setCount({
+      learned: learned,
+      tolearn: tolearn,
+      learning: learning,
+    });
+  }, [songs]);
 
   const toggleAddShowing = () => {
     setAddShowing(!addShowing);
@@ -123,7 +147,7 @@ function App() {
 
   return (
     <div className="App">
-      <Sidebar toggle={toggleAddShowing} allLen={songs.length} />
+      <Sidebar toggle={toggleAddShowing} allLen={songs.length} count={count} />
       {viewCardShowing && (
         <ViewCard
           toggle={toggleViewCard}

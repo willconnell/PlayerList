@@ -134,10 +134,10 @@ const AddModal = (props) => {
         </div>
         <button
           type="button"
-          className="btn btn-danger m-2"
+          className="btn btn-secondary m-2"
           onClick={props.toggle}
         >
-          Discard
+          Cancel
         </button>
         <button type="submit" className="btn btn-success m-2">
           Save Changes

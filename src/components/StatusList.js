@@ -15,15 +15,21 @@ const StatusList = (props) => {
       </button>
       <button className="slist list-group-item d-flex justify-content-between align-items-center">
         Learning In Progress
-        <span className="badge bg-primary rounded-pill">14</span>
+        <span className="badge bg-primary rounded-pill">
+          {props.count.learning}
+        </span>
       </button>
       <button className="slist list-group-item d-flex justify-content-between align-items-center">
         Want to Learn
-        <span className="badge bg-primary rounded-pill">2</span>
+        <span className="badge bg-primary rounded-pill">
+          {props.count.tolearn}
+        </span>
       </button>
       <button className="slist list-group-item d-flex justify-content-between align-items-center">
         Learned
-        <span className="badge bg-primary rounded-pill">1</span>
+        <span className="badge bg-primary rounded-pill">
+          {props.count.learned}
+        </span>
       </button>
     </ul>
   );
