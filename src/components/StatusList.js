@@ -9,23 +9,43 @@ const StatusList = (props) => {
 
   return (
     <ul className="list-group">
-      <button className="slist list-group-item d-flex justify-content-between align-items-center">
+      <button
+        onClick={() => {
+          props.filter("All");
+        }}
+        className="slist list-group-item d-flex justify-content-between align-items-center"
+      >
         All
         <span className="badge bg-primary rounded-pill">{props.allLen}</span>
       </button>
-      <button className="slist list-group-item d-flex justify-content-between align-items-center">
+      <button
+        onClick={() => {
+          props.filter("In Progress");
+        }}
+        className="slist list-group-item d-flex justify-content-between align-items-center"
+      >
         Learning In Progress
         <span className="badge bg-primary rounded-pill">
           {props.count.learning}
         </span>
       </button>
-      <button className="slist list-group-item d-flex justify-content-between align-items-center">
+      <button
+        onClick={() => {
+          props.filter("To Learn");
+        }}
+        className="slist list-group-item d-flex justify-content-between align-items-center"
+      >
         Want to Learn
         <span className="badge bg-primary rounded-pill">
           {props.count.tolearn}
         </span>
       </button>
-      <button className="slist list-group-item d-flex justify-content-between align-items-center">
+      <button
+        onClick={() => {
+          props.filter("Learned");
+        }}
+        className="slist list-group-item d-flex justify-content-between align-items-center"
+      >
         Learned
         <span className="badge bg-primary rounded-pill">
           {props.count.learned}

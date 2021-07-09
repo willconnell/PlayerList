@@ -27,6 +27,7 @@ function App() {
       status: "In Progress",
       notes: "",
       lyrics: "",
+      visible: true,
     },
     {
       id: 3,
@@ -38,6 +39,7 @@ function App() {
       status: "In Progress",
       notes: "",
       lyrics: "",
+      visible: true,
     },
     {
       id: 4,
@@ -49,6 +51,7 @@ function App() {
       status: "To Learn",
       notes: "",
       lyrics: "",
+      visible: true,
     },
     {
       id: 1,
@@ -60,6 +63,7 @@ function App() {
       status: "Learned",
       notes: "",
       lyrics: "",
+      visible: true,
     },
   ]);
 
@@ -70,11 +74,11 @@ function App() {
     let learned = 0;
 
     songs.map((song) => {
-      if (song.status == "To Learn") {
+      if (song.status === "To Learn") {
         tolearn += 1;
-      } else if (song.status == "In Progress") {
+      } else if (song.status === "In Progress") {
         learning += 1;
-      } else if (song.status == "Learned") {
+      } else if (song.status === "Learned") {
         learned += 1;
       }
     });
@@ -123,13 +127,13 @@ function App() {
         status: song.status,
         notes: song.notes,
         lyrics: song.lyrics,
+        visible: true,
       },
     ]);
   };
 
   const saveEditedSong = (newSong) => {
-    console.log(newSong);
-
+    // console.log(newSong);
     songs.map((song) => {
       if (song.id === newSong.id) {
         song.name = newSong.name;
@@ -141,13 +145,31 @@ function App() {
         song.lyrics = newSong.lyrics;
       }
     });
+    // console.log(songs);
+  };
 
-    console.log(songs);
+  const filterSongs = (status) => {
+    songs.map((song) => {
+      console.log(song.status);
+      if (status === "All") {
+        song.visible = true;
+      } else if (song.status === status) {
+        song.visible = true;
+      } else {
+        song.visible = false;
+      }
+    });
+    setSongs([...songs]);
   };
 
   return (
     <div className="App">
-      <Sidebar toggle={toggleAddShowing} allLen={songs.length} count={count} />
+      <Sidebar
+        toggle={toggleAddShowing}
+        allLen={songs.length}
+        count={count}
+        filter={filterSongs}
+      />
       {viewCardShowing && (
         <ViewCard
           toggle={toggleViewCard}
