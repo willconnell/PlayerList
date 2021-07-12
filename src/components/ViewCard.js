@@ -10,9 +10,9 @@ const ViewCard = (props) => {
     props.toggleEdit(props.song.id);
   };
 
-  const markAsLearned = () => {
-    // mark song as learned;
-  };
+  // const markAsLearned = () => {
+  //   // mark song as learned;
+  // };
 
   return (
     <>
@@ -39,13 +39,14 @@ const ViewCard = (props) => {
         {/* {make ^this open into a new window} */}
         <p>Lyrics in a nice format; use Lorem ipsum</p>
         <p>Notes</p>
-        <p>Mark as Learned button functionality</p>
-        <p>Edit button functionality</p>
         <div className="d-flex">
           <button onClick={onEdit} className="btn btn-secondary m-1">
             Edit
           </button>
-          <button onClick={markAsLearned} className="btn btn-light m-1">
+          <button
+            onClick={() => props.markCompleted(props.song.id)}
+            className="btn btn-light m-1"
+          >
             <BsCheck style={{ marginRight: "5px" }} />
             Mark as Learned
           </button>

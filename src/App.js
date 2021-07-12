@@ -6,12 +6,14 @@ import Heading from "./components/Heading.js";
 import AddModal from "./components/AddModal.js";
 import ViewCard from "./components/ViewCard.js";
 import EditModal from "./components/EditModal.js";
+import MobileSidebar from "./components/MobileSidebar.js";
 
 function App() {
   const [addShowing, setAddShowing] = useState(false);
   const [viewCardShowing, setViewCardShowing] = useState(false);
   const [viewableSong, setViewableSong] = useState("");
   const [editShowing, setEditShowing] = useState(false);
+  const [mobileSidebarShowing, setMobileSidebarShowing] = useState(false);
   const [count, setCount] = useState({
     learned: 0,
     tolearn: 0,
@@ -106,7 +108,6 @@ function App() {
         setViewableSong(song);
       }
     });
-    // console.log(songs.id);
   };
 
   const exitViewCard = () => {
@@ -130,10 +131,11 @@ function App() {
         visible: true,
       },
     ]);
+    // close mobile sidebar if it's open
+    setMobileSidebarShowing(false);
   };
 
   const saveEditedSong = (newSong) => {
-    // console.log(newSong);
     songs.map((song) => {
       if (song.id === newSong.id) {
         song.name = newSong.name;
@@ -145,7 +147,6 @@ function App() {
         song.lyrics = newSong.lyrics;
       }
     });
-    // console.log(songs);
   };
 
   const filterSongs = (status) => {
@@ -160,6 +161,32 @@ function App() {
       }
     });
     setSongs([...songs]);
+    // close mobile sidebar if it's open
+    setMobileSidebarShowing(false);
+  };
+
+  const deleteSong = (songID) => {
+    setSongs(songs.filter((song) => song.id !== songID));
+  };
+
+  const markCompleted = (songID) => {
+    console.log("mark completed");
+    console.log(songID);
+
+    songs.map((song) => {
+      if (song.id === songID) {
+        song.status = "Learned";
+      }
+    });
+
+    setSongs([...songs]);
+    setViewCardShowing(false);
+    // include animation with the mark as completed button if possible; (to show user that it worked)
+  };
+
+  const toggleMobileSidebar = (boolean) => {
+    setMobileSidebarShowing(boolean);
+    console.log("toggle mobile sidebar clicked");
   };
 
   return (
@@ -170,12 +197,23 @@ function App() {
         count={count}
         filter={filterSongs}
       />
+      {mobileSidebarShowing && (
+        <MobileSidebar
+          toggle={toggleAddShowing}
+          allLen={songs.length}
+          count={count}
+          filter={filterSongs}
+          toggleSidebar={toggleMobileSidebar}
+        />
+      )}
+
       {viewCardShowing && (
         <ViewCard
           toggle={toggleViewCard}
           toggleEdit={toggleEditShowing}
           song={viewableSong}
           exit={exitViewCard}
+          markCompleted={markCompleted}
         />
       )}
       {addShowing && <AddModal toggle={toggleAddShowing} onAddSong={addSong} />}
@@ -187,18 +225,19 @@ function App() {
           onAddSong={addSong}
           song={viewableSong}
           saveChanges={saveEditedSong}
+          deleteSong={deleteSong}
         />
       )}
 
-      <Heading />
+      <Heading toggleSidebar={toggleMobileSidebar} />
       <div className="container">
-        <div className="row cards-container offset-3 d-flex">
-          <Cards songs={songs} toggle={toggleViewCard} />
-          {/* {songs.length === 0 ? (
-            <p>No Songs to Show</p>
+        <div className="row cards-container offset-md-3 d-flex">
+          {/* <Cards songs={songs} toggle={toggleViewCard} /> */}
+          {songs.length === 0 ? (
+            <p>No Songs</p>
           ) : (
-            <Cards songs={songs} />
-          )} */}
+            <Cards songs={songs} toggle={toggleViewCard} />
+          )}
         </div>
       </div>
     </div>

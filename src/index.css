@@ -19,6 +19,20 @@ code {
   padding: 10px;
 }
 
+.mobileleftnav {
+  float: left;
+  position: fixed;
+  width: 85%;
+  height: 100%;
+  padding: 10px;
+  z-index: 1;
+}
+
+.mobileX {
+  margin-left: 90%;
+  cursor: pointer;
+}
+
 .card {
   margin-bottom: 15px;
   margin-right: 4px;
@@ -96,6 +110,16 @@ code {
   color: rgb(52, 52, 52);
 }
 
+.heading {
+  margin: 7px;
+}
+
+.invisible {
+  color: white;
+  cursor: default;
+  background-color: white;
+}
+
 /* large size */
 @media (min-width: 992px) {
   .card {
@@ -105,5 +129,27 @@ code {
   .addmodal {
     left: 25%;
     width: 50%;
+  }
+}
+
+/* medium size */
+@media screen and (max-width: 768px) {
+  .leftnav {
+    display: none;
+  }
+}
+
+/* medium size */
+@media screen and (min-width: 768px) {
+  .burger {
+    display: none;
+  }
+}
+
+/* small size */
+@media screen and (max-width: 576px) {
+  .card {
+    width: 90%;
+    margin-left: 5%;
   }
 }

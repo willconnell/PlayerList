@@ -1,9 +1,16 @@
 import React from "react";
 import StatusList from "./StatusList.js";
+import { CgClose } from "react-icons/cg";
 
 const Sidebar = (props) => {
   return (
-    <div className="leftnav bg-light col-3" id="navCollapse">
+    <div className="mobileleftnav bg-light col-3" id="navCollapse">
+      <CgClose
+        onClick={() => {
+          props.toggleSidebar(false);
+        }}
+        className="mobileX"
+      />
       <h3>Navigation</h3>
       <p>
         <button className="btn btn-primary" onClick={props.toggle}>

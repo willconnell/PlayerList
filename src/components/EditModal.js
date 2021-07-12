@@ -53,9 +53,9 @@ const EditModal = (props) => {
     props.toggle();
   };
 
-  const onDelete = () => {
-    console.log("Song Deleted!");
-  };
+  // const onDelete = () => {
+  //   console.log("Song Deleted!");
+  // };
 
   return (
     <>
@@ -215,7 +215,13 @@ const EditModal = (props) => {
         >
           Cancel
         </button>
-        <button className="btn btn-danger m-2" onClick={onDelete}>
+        <button
+          type="button"
+          className="btn btn-danger m-2"
+          onClick={() => {
+            props.deleteSong(props.song.id);
+          }}
+        >
           <BsTrash style={{ marginRight: "5px" }} />
           Delete Song
         </button>
