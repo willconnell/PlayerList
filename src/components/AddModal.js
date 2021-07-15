@@ -29,10 +29,34 @@ const AddModal = (props) => {
     props.onAddSong(song);
   };
 
+  if (props.state === "entering") {
+    console.log("entering");
+  } else if (props.state === "exiting") {
+    console.log("exiting");
+  }
+
+  const modalClasses = [
+    "addmodal",
+    props.state === "entering"
+      ? "enteringCard"
+      : props.state === "exiting"
+      ? "exitingCard"
+      : "",
+  ];
+
+  const backdropClasses = [
+    "backdrop",
+    props.state === "entering"
+      ? "enteringBackdrop"
+      : props.state === "exiting"
+      ? "exitingBackdrop"
+      : "",
+  ];
+
   return (
     <>
-      <div className="backdrop" />
-      <form className="addmodal" onSubmit={onSubmit}>
+      <div className={backdropClasses.join(" ")} />
+      <form className={modalClasses.join(" ")} onSubmit={onSubmit}>
         <div className="modalheading d-flex justify-content-between">
           <span />
           <h1 style={{ textAlign: "center" }}>Add a Song</h1>

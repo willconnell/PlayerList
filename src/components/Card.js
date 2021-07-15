@@ -5,8 +5,18 @@ const Card = (props) => {
     props.toggle(props.id);
   };
 
+  const cssClasses = [
+    "card",
+    "clickable",
+    props.state === "entering"
+      ? "enteringCard"
+      : props.state === "exiting"
+      ? "exitingCard"
+      : "",
+  ];
+
   return (
-    <div className="card clickable" onClick={onClick}>
+    <div className={cssClasses.join(" ")} onClick={onClick}>
       <div className="card-body">
         <h5 className="card-title">{props.name}</h5>
         <h6 className="card-subtitle">by {props.artist}</h6>

@@ -7,6 +7,7 @@ import AddModal from "./components/AddModal.js";
 import ViewCard from "./components/ViewCard.js";
 import EditModal from "./components/EditModal.js";
 import MobileSidebar from "./components/MobileSidebar.js";
+import Transition from "react-transition-group/Transition";
 
 function App() {
   const [addShowing, setAddShowing] = useState(false);
@@ -167,6 +168,7 @@ function App() {
 
   const deleteSong = (songID) => {
     setSongs(songs.filter((song) => song.id !== songID));
+    setEditShowing(false);
   };
 
   const markCompleted = (songID) => {
@@ -216,7 +218,18 @@ function App() {
           markCompleted={markCompleted}
         />
       )}
-      {addShowing && <AddModal toggle={toggleAddShowing} onAddSong={addSong} />}
+
+      <Transition in={addShowing} timeout={400} mountOnEnter unmountOnExit>
+        {(state) => (
+          <AddModal
+            state={state}
+            toggle={toggleAddShowing}
+            onAddSong={addSong}
+          />
+        )}
+      </Transition>
+
+      {/* {addShowing && <AddModal toggle={toggleAddShowing} onAddSong={addSong} />} */}
 
       {editShowing && (
         <EditModal
