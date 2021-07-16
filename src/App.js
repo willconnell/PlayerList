@@ -199,7 +199,26 @@ function App() {
         count={count}
         filter={filterSongs}
       />
-      {mobileSidebarShowing && (
+
+      <Transition
+        in={mobileSidebarShowing}
+        timeout={400}
+        mountOnEnter
+        unmountOnExit
+      >
+        {(state) => (
+          <MobileSidebar
+            state={state}
+            toggle={toggleAddShowing}
+            allLen={songs.length}
+            count={count}
+            filter={filterSongs}
+            toggleSidebar={toggleMobileSidebar}
+          />
+        )}
+      </Transition>
+
+      {/* {mobileSidebarShowing && (
         <MobileSidebar
           toggle={toggleAddShowing}
           allLen={songs.length}
@@ -207,7 +226,7 @@ function App() {
           filter={filterSongs}
           toggleSidebar={toggleMobileSidebar}
         />
-      )}
+      )} */}
 
       <Transition in={viewCardShowing} timeout={400} mountOnEnter unmountOnExit>
         {(state) => (
@@ -232,8 +251,6 @@ function App() {
         )}
       </Transition>
 
-      {/* {addShowing && <AddModal toggle={toggleAddShowing} onAddSong={addSong} />} */}
-
       <Transition in={editShowing} timeout={400} mountOnEnter unmountOnExit>
         {(state) => (
           <EditModal
@@ -247,17 +264,6 @@ function App() {
           />
         )}
       </Transition>
-
-      {/* {editShowing && (
-        <EditModal
-          toggle={toggleEditShowing}
-          // probably will need to edit this so it doesn't create an entire new song
-          onAddSong={addSong}
-          song={viewableSong}
-          saveChanges={saveEditedSong}
-          deleteSong={deleteSong}
-        />
-      )} */}
 
       <Heading toggleSidebar={toggleMobileSidebar} />
       <div className="container">

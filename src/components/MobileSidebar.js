@@ -3,8 +3,19 @@ import StatusList from "./StatusList.js";
 import { CgClose } from "react-icons/cg";
 
 const Sidebar = (props) => {
+  const cssClasses = [
+    "mobileleftnav",
+    "bg-light",
+    "col-3",
+    props.state === "entering"
+      ? "enteringSidenav"
+      : props.state === "exiting"
+      ? "exitingSidenav"
+      : "",
+  ];
+
   return (
-    <div className="mobileleftnav bg-light col-3" id="navCollapse">
+    <div className={cssClasses.join(" ")} id="navCollapse">
       <CgClose
         onClick={() => {
           props.toggleSidebar(false);
