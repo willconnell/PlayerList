@@ -13,11 +13,28 @@ const ViewCard = (props) => {
   // const markAsLearned = () => {
   //   // mark song as learned;
   // };
+  const modalClasses = [
+    "addmodal",
+    props.state === "entering"
+      ? "enteringCard"
+      : props.state === "exiting"
+      ? "exitingCard"
+      : "",
+  ];
+
+  const backdropClasses = [
+    "backdrop",
+    props.state === "entering"
+      ? "enteringBackdrop"
+      : props.state === "exiting"
+      ? "exitingBackdrop"
+      : "",
+  ];
 
   return (
     <>
-      <div className="backdrop" onClick={props.exit} />
-      <div className="addmodal">
+      <div className={backdropClasses.join(" ")} onClick={props.exit} />
+      <div className={modalClasses.join(" ")}>
         <div className="modalheading d-flex justify-content-between">
           <span />
           <h1 style={{ textAlign: "center" }}>{props.song.name}</h1>

@@ -56,11 +56,28 @@ const EditModal = (props) => {
   // const onDelete = () => {
   //   console.log("Song Deleted!");
   // };
+  const modalClasses = [
+    "addmodal",
+    props.state === "entering"
+      ? "enteringCard"
+      : props.state === "exiting"
+      ? "exitingCard"
+      : "",
+  ];
+
+  const backdropClasses = [
+    "backdrop",
+    props.state === "entering"
+      ? "enteringBackdrop"
+      : props.state === "exiting"
+      ? "exitingBackdrop"
+      : "",
+  ];
 
   return (
     <>
-      <div className="backdrop" />
-      <form className="addmodal" onSubmit={onSubmit}>
+      <div className={backdropClasses.join(" ")} />
+      <form className={modalClasses.join(" ")} onSubmit={onSubmit}>
         <div className="modalheading d-flex justify-content-between">
           <span />
           <h1 style={{ textAlign: "center" }}>Edit Song</h1>

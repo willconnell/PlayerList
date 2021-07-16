@@ -209,15 +209,18 @@ function App() {
         />
       )}
 
-      {viewCardShowing && (
-        <ViewCard
-          toggle={toggleViewCard}
-          toggleEdit={toggleEditShowing}
-          song={viewableSong}
-          exit={exitViewCard}
-          markCompleted={markCompleted}
-        />
-      )}
+      <Transition in={viewCardShowing} timeout={400} mountOnEnter unmountOnExit>
+        {(state) => (
+          <ViewCard
+            state={state}
+            toggle={toggleViewCard}
+            toggleEdit={toggleEditShowing}
+            song={viewableSong}
+            exit={exitViewCard}
+            markCompleted={markCompleted}
+          />
+        )}
+      </Transition>
 
       <Transition in={addShowing} timeout={400} mountOnEnter unmountOnExit>
         {(state) => (
@@ -231,7 +234,21 @@ function App() {
 
       {/* {addShowing && <AddModal toggle={toggleAddShowing} onAddSong={addSong} />} */}
 
-      {editShowing && (
+      <Transition in={editShowing} timeout={400} mountOnEnter unmountOnExit>
+        {(state) => (
+          <EditModal
+            state={state}
+            toggle={toggleEditShowing}
+            // probably will need to edit this so it doesn't create an entire new song
+            onAddSong={addSong}
+            song={viewableSong}
+            saveChanges={saveEditedSong}
+            deleteSong={deleteSong}
+          />
+        )}
+      </Transition>
+
+      {/* {editShowing && (
         <EditModal
           toggle={toggleEditShowing}
           // probably will need to edit this so it doesn't create an entire new song
@@ -240,7 +257,7 @@ function App() {
           saveChanges={saveEditedSong}
           deleteSong={deleteSong}
         />
-      )}
+      )} */}
 
       <Heading toggleSidebar={toggleMobileSidebar} />
       <div className="container">
