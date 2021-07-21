@@ -6,7 +6,20 @@ const Cards = (props) => {
     <>
       {props.songs.map((song) => (
         <>
-          <Transition
+          {/* disable transition for now to fix bug  */}
+          {song.visible && (
+            <Card
+              id={song.id}
+              name={song.name}
+              artist={song.artist}
+              chords={song.chords}
+              youtube={song.youtube}
+              status={song.status}
+              lyrics={song.lyrics}
+              toggle={props.toggle}
+            />
+          )}
+          {/* <Transition
             in={song.visible}
             timeout={400}
             mountOnEnter
@@ -25,7 +38,7 @@ const Cards = (props) => {
                 state={state}
               />
             )}
-          </Transition>
+          </Transition> */}
         </>
       ))}
     </>

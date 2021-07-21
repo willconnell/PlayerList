@@ -82,6 +82,37 @@ app.get("/api/songs", (req, res) => {
   console.log("GET: ", songs);
 });
 
+// get request for checking specific songs; used for debugging
+app.get("/api/songs/:id", (req, res) => {
+  const song = songs.find((c) => c.id === parseInt(req.params.id));
+  if (!song) res.status(404).send("404: Song not found");
+  res.send(song);
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening on Port ${PORT}`);
+});
+
+// set up PUT request
+app.put("/api/songs/:id", (req, res) => {
+  const song = songs.find((c) => c.id === parseInt(req.params.id));
+  if (!song) res.status(404).send("404: Song not found");
+
+  song.name = req.body.name;
+  song.artist = req.body.artist;
+  song.chords = req.body.chords;
+  song.youtube = req.body.youtube;
+  song.status = req.body.status;
+  song.notes = req.body.notes;
+  song.lyrics = req.body.lyrics;
+  song.visible = true;
+  res.send(song);
+});
+
+// set up DELETE request
+app.delete("/api/songs/:ud", (req, res) => {
+  const song = songs.find((c) => c.id === parseInt(req.params.id));
+  const index = songs.indexOf(song);
+  songs.splice(index, 1);
+  res.send(song);
 });

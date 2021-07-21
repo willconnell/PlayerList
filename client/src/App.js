@@ -20,57 +20,21 @@ function App() {
     tolearn: 0,
     learning: 0,
   });
-  const [songs, setSongs] = useState([
-    {
-      id: 2,
-      name: "Neon",
-      artist: "John Mayer",
-      chords: "https://tabs.ultimate-guitar.com/tab/john-mayer/neon-tabs-48164",
-      youtube: "https://www.youtube.com/embed/_DfQC5qHhbo",
-      status: "In Progress",
-      notes: "",
-      lyrics: "",
-      visible: true,
-    },
-    {
-      id: 3,
-      name: "Pride and Joy",
-      artist: "Stevie Ray Vaughn",
-      chords:
-        "https://tabs.ultimate-guitar.com/tab/stevie-ray-vaughan-double-trouble/pride-and-joy-tabs-30829",
-      youtube: "https://www.youtube.com/embed/0vo23H9J8o8",
-      status: "In Progress",
-      notes: "",
-      lyrics: "",
-      visible: true,
-    },
-    {
-      id: 4,
-      name: "Under the Bridge",
-      artist: "Red Hot Chili Peppers",
-      chords:
-        "https://tabs.ultimate-guitar.com/tab/red-hot-chili-peppers/under-the-bridge-tabs-3832",
-      youtube: "https://www.youtube.com/embed/lwlogyj7nFE",
-      status: "To Learn",
-      notes: "",
-      lyrics: "",
-      visible: true,
-    },
-    {
-      id: 1,
-      name: "Something",
-      artist: "The Beatles",
-      chords:
-        "https://tabs.ultimate-guitar.com/tab/the-beatles/something-chords-335727",
-      youtube: "https://www.youtube.com/embed/UelDrZ1aFeY",
-      status: "Learned",
-      notes: "",
-      lyrics: "",
-      visible: true,
-    },
-  ]);
+  const [songs, setSongs] = useState([]);
 
-  // run code first time the App is rendered, and everytime song state changes
+  // fetch songs from backend when app is initially rendered
+  useEffect(() => {
+    fetch("/api/songs")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setSongs(data);
+      });
+    console.log("songs retrieved from backend");
+  }, []);
+
+  // count songs for sidebar numbers
   useEffect(() => {
     let tolearn = 0;
     let learning = 0;
@@ -95,6 +59,8 @@ function App() {
 
   const toggleAddShowing = () => {
     setAddShowing(!addShowing);
+    // close mobile sidebar if it's opened
+    setMobileSidebarShowing(false);
   };
 
   const toggleEditShowing = () => {
@@ -115,13 +81,13 @@ function App() {
     setViewCardShowing(false);
   };
 
-  const addSong = (song) => {
+  const addSong = async (song) => {
     setAddShowing(false);
     console.log("new song added");
     setSongs([
       ...songs,
       {
-        id: song.id,
+        id: songs.length + 1,
         name: song.name,
         artist: song.artist,
         chords: song.chords,
@@ -132,12 +98,23 @@ function App() {
         visible: true,
       },
     ]);
-    // close mobile sidebar if it's open
-    setMobileSidebarShowing(false);
+
+    // send song data to backend server
+    const response = await fetch("/api/songs", {
+      method: "POST",
+      body: JSON.stringify(song),
+      // FIXME: headers line might not be technically required
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+    console.log("song sent to server");
   };
 
-  const saveEditedSong = (newSong) => {
-    songs.map((song) => {
+  const saveEditedSong = async (newSong) => {
+    songs.map(async (song) => {
       if (song.id === newSong.id) {
         song.name = newSong.name;
         song.artist = newSong.artist;
@@ -148,6 +125,18 @@ function App() {
         song.lyrics = newSong.lyrics;
       }
     });
+
+    console.log(newSong);
+    const response = await fetch(`/api/songs/${newSong.id}`, {
+      method: "PUT",
+      body: JSON.stringify(newSong),
+      // FIXME: headers line might not be technically required
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log("updated song sent to server");
   };
 
   const filterSongs = (status) => {
@@ -166,9 +155,15 @@ function App() {
     setMobileSidebarShowing(false);
   };
 
-  const deleteSong = (songID) => {
+  const deleteSong = async (songID) => {
+    // delete song from UI
     setSongs(songs.filter((song) => song.id !== songID));
     setEditShowing(false);
+
+    // delete from backend with API call
+    fetch(`/api/songs/${songID}`, {
+      method: "DELETE",
+    });
   };
 
   const markCompleted = (songID) => {
@@ -241,7 +236,7 @@ function App() {
         )}
       </Transition>
 
-      <Transition in={addShowing} timeout={400} mountOnEnter unmountOnExit>
+      {/* <Transition in={addShowing} timeout={400} mountOnEnter unmountOnExit>
         {(state) => (
           <AddModal
             state={state}
@@ -249,7 +244,10 @@ function App() {
             onAddSong={addSong}
           />
         )}
-      </Transition>
+      </Transition> */}
+
+      {/* FIXME: including below line until I can fix bug with the above transition */}
+      {addShowing && <AddModal toggle={toggleAddShowing} onAddSong={addSong} />}
 
       <Transition in={editShowing} timeout={400} mountOnEnter unmountOnExit>
         {(state) => (
