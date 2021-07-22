@@ -22,6 +22,20 @@ function App() {
   });
   const [songs, setSongs] = useState([]);
 
+  // practice call to the genius API
+  useEffect(async () => {
+    const accessToken = "[sensitive info]";
+    const query = "something%20the%20beatles";
+    // const uri = `https://api.genius.com/search?access_token=${accessToken}&q=${query}`;
+    // const uri = `https://api.genius.com/songs/87564?access_token=${accessToken}`;
+    const uri = `https://api.genius.com/songs/78960?access_token=${accessToken}`;
+
+    const response = await fetch(uri);
+    const data = await response.json();
+    console.log(data);
+    console.log("youtube link is", data.response.song.media[1].url);
+  });
+
   // fetch songs from backend when app is initially rendered
   useEffect(() => {
     fetch("/api/songs")
