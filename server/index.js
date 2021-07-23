@@ -5,12 +5,15 @@ const app = express();
 
 app.use(express.json());
 
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+
 // sample database for now below
 let songs = [
   {
     id: 2,
-    name: "Neon from server",
-    artist: "John Mayer from server",
+    name: "Neon",
+    artist: "John Mayer",
     chords: "https://tabs.ultimate-guitar.com/tab/john-mayer/neon-tabs-48164",
     youtube: "https://www.youtube.com/embed/_DfQC5qHhbo",
     status: "In Progress",
@@ -20,8 +23,8 @@ let songs = [
   },
   {
     id: 3,
-    name: "Pride and Joy from server",
-    artist: "Stevie Ray Vaughn from server",
+    name: "Pride and Joy",
+    artist: "Stevie Ray Vaughn",
     chords:
       "https://tabs.ultimate-guitar.com/tab/stevie-ray-vaughan-double-trouble/pride-and-joy-tabs-30829",
     youtube: "https://www.youtube.com/embed/0vo23H9J8o8",
@@ -32,8 +35,8 @@ let songs = [
   },
   {
     id: 4,
-    name: "Under the Bridge from server",
-    artist: "Red Hot Chili Peppers from server",
+    name: "Under the Bridge",
+    artist: "Red Hot Chili Peppers",
     chords:
       "https://tabs.ultimate-guitar.com/tab/red-hot-chili-peppers/under-the-bridge-tabs-3832",
     youtube: "https://www.youtube.com/embed/lwlogyj7nFE",
@@ -44,8 +47,8 @@ let songs = [
   },
   {
     id: 1,
-    name: "Something from server",
-    artist: "The Beatles from server",
+    name: "Something",
+    artist: "The Beatles",
     chords:
       "https://tabs.ultimate-guitar.com/tab/the-beatles/something-chords-335727",
     youtube: "https://www.youtube.com/embed/UelDrZ1aFeY",
@@ -73,7 +76,7 @@ app.post("/api/songs", (req, res) => {
   songs.push(song);
   res.send(song);
   console.log("POST: song received on server");
-  console.log(songs);
+  // console.log(songs);
 });
 
 // set up GET request
@@ -116,3 +119,14 @@ app.delete("/api/songs/:ud", (req, res) => {
   songs.splice(index, 1);
   res.send(song);
 });
+
+const practice = async () => {
+  const page_response = await fetch(
+    "https://genius.com/Frank-ocean-super-rich-kids-lyrics"
+  );
+  const text = await page_response.text();
+  const dom = await new JSDOM(text);
+  console.log(dom.window.document.querySelector("div").textContent);
+};
+
+practice();

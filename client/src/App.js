@@ -24,17 +24,33 @@ function App() {
 
   // practice call to the genius API
   useEffect(async () => {
-    const accessToken = "[sensitive info]";
-    const query = "something%20the%20beatles";
-    // const uri = `https://api.genius.com/search?access_token=${accessToken}&q=${query}`;
-    // const uri = `https://api.genius.com/songs/87564?access_token=${accessToken}`;
-    const uri = `https://api.genius.com/songs/78960?access_token=${accessToken}`;
+    const accessToken =
+      "qsdfz6yd1U341DT9dPiANrAN67MdHenvI_D8s9g-QnNdmie17u97MhuDrHBr4Upj";
+    const song_name = "pride and joy".replaceAll(" ", "%20");
+    const artist_name = "Stevie Ray Vaughan".replaceAll(" ", "%20");
+    const query = `${song_name}%20${artist_name}`;
+    console.log("query", query);
+    console.log("HEELLJAFKSDAJFKL;J");
+    const uri = `https://api.genius.com/search?access_token=${accessToken}&q=${query}`;
 
-    const response = await fetch(uri);
-    const data = await response.json();
+    const search_response = await fetch(uri);
+    const data = await search_response.json();
     console.log(data);
-    console.log("youtube link is", data.response.song.media[1].url);
-  });
+    // first result of search; currently no checking in place yet
+    console.log(data.response.hits[0].result.full_title);
+    const api_path = data.response.hits[0].result.api_path;
+
+    const song_uri = `https://api.genius.com${api_path}?access_token=${accessToken}`;
+    const song_response = await fetch(song_uri);
+    const song_data = await song_response.json();
+    console.log(song_data);
+
+    song_data.response.song.media.forEach((media_source) => {
+      console.log(media_source.provider, "link is", media_source.url);
+    });
+
+    console.log("genius link is ", song_data.response.song.url);
+  }, []);
 
   // fetch songs from backend when app is initially rendered
   useEffect(() => {
