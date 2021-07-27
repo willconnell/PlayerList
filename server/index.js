@@ -113,11 +113,15 @@ app.put("/api/songs/:id", (req, res) => {
 });
 
 // set up DELETE request
-app.delete("/api/songs/:ud", (req, res) => {
+app.delete("/api/songs/:id", (req, res) => {
   const song = songs.find((c) => c.id === parseInt(req.params.id));
+  console.log("tHE ID", req.params.id);
   const index = songs.indexOf(song);
   songs.splice(index, 1);
   res.send(song);
+  console.log("DELETING index ", index);
+  console.log("the song", song);
+  console.log("id", req.params.id);
 });
 
 const practice = async () => {

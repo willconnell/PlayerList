@@ -194,6 +194,8 @@ function App() {
     fetch(`/api/songs/${songID}`, {
       method: "DELETE",
     });
+
+    console.log("songID", songID);
   };
 
   const markCompleted = (songID) => {
