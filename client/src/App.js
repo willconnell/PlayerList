@@ -24,6 +24,7 @@ function App() {
 
   // practice call to the genius API
   useEffect(async () => {
+    // ACCESS TOKEN ---------------------------------------------------------------------
     const accessToken = "";
     const song_name = "pride and joy";
     const artist_name = "Stevie Ray Vaughan";

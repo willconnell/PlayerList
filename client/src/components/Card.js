@@ -41,7 +41,7 @@ const Card = (props) => {
         <li className="list-group-item">
           {" "}
           <a
-            href={props.youtube}
+            href={`https://www.youtube.com/watch?v=${props.youtube}`}
             target={props.youtube !== "" ? "_blank" : ""}
             rel="noreferrer"
             className="card-link"

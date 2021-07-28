@@ -12,16 +12,15 @@ const AddModal = (props) => {
   const [lyrics, setLyrics] = useState("");
 
   const onSubmit = (e) => {
-    // convert youtube link to embed link
+    // convert youtube link to 11 digit unique youtube id
     const code = youtube.slice(-11);
-    const newlink = "https://www.youtube.com/embed/" + code;
 
     const song = {
       id: Math.random() * 10 + 1,
       name: songName,
       artist: artist,
       chords: chords,
-      youtube: newlink,
+      youtube: code,
       status: status,
       notes: notes,
       lyrics: lyrics,

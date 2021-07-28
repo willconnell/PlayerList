@@ -15,7 +15,7 @@ let songs = [
     name: "Neon",
     artist: "John Mayer",
     chords: "https://tabs.ultimate-guitar.com/tab/john-mayer/neon-tabs-48164",
-    youtube: "https://www.youtube.com/embed/_DfQC5qHhbo",
+    youtube: "_DfQC5qHhbo",
     status: "In Progress",
     notes: "Some sample notes for Neon",
     lyrics: "",
@@ -27,7 +27,7 @@ let songs = [
     artist: "Stevie Ray Vaughn",
     chords:
       "https://tabs.ultimate-guitar.com/tab/stevie-ray-vaughan-double-trouble/pride-and-joy-tabs-30829",
-    youtube: "https://www.youtube.com/embed/0vo23H9J8o8",
+    youtube: "0vo23H9J8o8",
     status: "In Progress",
     notes: "Some sample notes for Pride and Joy",
     lyrics: "",
@@ -39,7 +39,7 @@ let songs = [
     artist: "Red Hot Chili Peppers",
     chords:
       "https://tabs.ultimate-guitar.com/tab/red-hot-chili-peppers/under-the-bridge-tabs-3832",
-    youtube: "https://www.youtube.com/embed/lwlogyj7nFE",
+    youtube: "lwlogyj7nFE",
     status: "To Learn",
     notes: "Some sample notes for Under the Bridge",
     lyrics: "",
@@ -51,7 +51,7 @@ let songs = [
     artist: "The Beatles",
     chords:
       "https://tabs.ultimate-guitar.com/tab/the-beatles/something-chords-335727",
-    youtube: "https://www.youtube.com/embed/UelDrZ1aFeY",
+    youtube: "UelDrZ1aFeY",
     status: "Learned",
     notes: "Some sample notes for Something",
     lyrics: "",

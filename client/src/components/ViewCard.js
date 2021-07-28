@@ -46,9 +46,12 @@ const ViewCard = (props) => {
           {/* keep modalX here for consistent layout, but make it invisible and non-functional */}
           <BsX className="modalX hidden" />
         </div>
-        {/* <iframe src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"></iframe> */}
-        {props.song.youtube !== "https://www.youtube.com/embed/" && (
-          <iframe width="100%" height="345" src={props.song.youtube}></iframe>
+        {props.song.youtube !== "" && (
+          <iframe
+            width="100%"
+            height="345"
+            src={`https://www.youtube.com/embed/${props.song.youtube}`}
+          ></iframe>
         )}
 
         <div className="link-button-container mx-auto">
