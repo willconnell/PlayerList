@@ -17,7 +17,7 @@ let songs = [
     chords: "https://tabs.ultimate-guitar.com/tab/john-mayer/neon-tabs-48164",
     youtube: "https://www.youtube.com/embed/_DfQC5qHhbo",
     status: "In Progress",
-    notes: "",
+    notes: "Some sample notes for Neon",
     lyrics: "",
     visible: true,
   },
@@ -29,7 +29,7 @@ let songs = [
       "https://tabs.ultimate-guitar.com/tab/stevie-ray-vaughan-double-trouble/pride-and-joy-tabs-30829",
     youtube: "https://www.youtube.com/embed/0vo23H9J8o8",
     status: "In Progress",
-    notes: "",
+    notes: "Some sample notes for Pride and Joy",
     lyrics: "",
     visible: true,
   },
@@ -41,7 +41,7 @@ let songs = [
       "https://tabs.ultimate-guitar.com/tab/red-hot-chili-peppers/under-the-bridge-tabs-3832",
     youtube: "https://www.youtube.com/embed/lwlogyj7nFE",
     status: "To Learn",
-    notes: "",
+    notes: "Some sample notes for Under the Bridge",
     lyrics: "",
     visible: true,
   },
@@ -53,7 +53,7 @@ let songs = [
       "https://tabs.ultimate-guitar.com/tab/the-beatles/something-chords-335727",
     youtube: "https://www.youtube.com/embed/UelDrZ1aFeY",
     status: "Learned",
-    notes: "",
+    notes: "Some sample notes for Something",
     lyrics: "",
     visible: true,
   },
@@ -75,14 +75,14 @@ app.post("/api/songs", (req, res) => {
   };
   songs.push(song);
   res.send(song);
-  console.log("POST: song received on server");
+  console.log("POST: song received on server", song);
   // console.log(songs);
 });
 
 // set up GET request
 app.get("/api/songs", (req, res) => {
   res.json(songs);
-  console.log("GET: ", songs);
+  console.log("GET songs");
 });
 
 // get request for checking specific songs; used for debugging
@@ -110,6 +110,7 @@ app.put("/api/songs/:id", (req, res) => {
   song.lyrics = req.body.lyrics;
   song.visible = true;
   res.send(song);
+  console.log("PUT", req.body);
 });
 
 // set up DELETE request

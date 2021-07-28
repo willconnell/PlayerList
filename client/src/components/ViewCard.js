@@ -51,11 +51,32 @@ const ViewCard = (props) => {
           <iframe width="100%" height="345" src={props.song.youtube}></iframe>
         )}
 
-        <button className="btn btn-outline-dark">Chords / Tabs</button>
-        <br />
-        {/* {make ^this open into a new window} */}
-        <p>Lyrics in a nice format; use Lorem ipsum</p>
-        <p>Notes</p>
+        <div className="link-button-container mx-auto">
+          <button className="btn btn-outline-dark m-2 link-btn">
+            Chords / Tabs
+          </button>
+          <br />
+          <button className="btn btn-outline-dark m-2 link-btn">
+            View Lyrics
+          </button>
+          <br />
+          <button className="btn btn-outline-dark m-2 link-btn">
+            Listen on Spotify
+          </button>
+          <br />
+          <button className="btn btn-outline-dark m-2 link-btn">
+            Listen on Soundcloud
+          </button>
+          <br />
+          <br />
+        </div>
+
+        <div className="notes-container">
+          <h6>
+            <strong>Notes</strong>
+          </h6>
+          <span>{props.song.notes}</span>
+        </div>
         <div className="d-flex">
           <button onClick={onEdit} className="btn btn-secondary m-1">
             Edit

@@ -24,26 +24,36 @@ function App() {
 
   // practice call to the genius API
   useEffect(async () => {
-    const accessToken =
-      "qsdfz6yd1U341DT9dPiANrAN67MdHenvI_D8s9g-QnNdmie17u97MhuDrHBr4Upj";
-    const song_name = "pride and joy".replaceAll(" ", "%20");
-    const artist_name = "Stevie Ray Vaughan".replaceAll(" ", "%20");
-    const query = `${song_name}%20${artist_name}`;
-    console.log("query", query);
-    console.log("HEELLJAFKSDAJFKL;J");
-    const uri = `https://api.genius.com/search?access_token=${accessToken}&q=${query}`;
+    const accessToken = "";
+    const song_name = "pride and joy";
+    const artist_name = "Stevie Ray Vaughan";
 
+    // query Genius API and return the first hit's song data
+    const query = `${song_name.replaceAll(
+      " ",
+      "%20"
+    )}%20${artist_name.replaceAll(" ", "%20")}`;
+    const uri = `https://api.genius.com/search?access_token=${accessToken}&q=${query}`;
     const search_response = await fetch(uri);
     const data = await search_response.json();
     console.log(data);
     // first result of search; currently no checking in place yet
     console.log(data.response.hits[0].result.full_title);
     const api_path = data.response.hits[0].result.api_path;
-
     const song_uri = `https://api.genius.com${api_path}?access_token=${accessToken}`;
     const song_response = await fetch(song_uri);
     const song_data = await song_response.json();
-    console.log(song_data);
+    console.log("song data:", song_data);
+
+    if (
+      song_data.response.song.title.toUpperCase() === song_name.toUpperCase()
+    ) {
+      // execute code as if song were added
+    }
+    console.log(
+      "The name of the song retrieved from the API is ",
+      song_data.response.song.title
+    );
 
     song_data.response.song.media.forEach((media_source) => {
       console.log(media_source.provider, "link is", media_source.url);
@@ -114,6 +124,9 @@ function App() {
   const addSong = async (song) => {
     setAddShowing(false);
     console.log("new song added");
+
+    // fetch data from genius api where none is provided
+
     setSongs([
       ...songs,
       {
@@ -198,19 +211,26 @@ function App() {
     console.log("songID", songID);
   };
 
-  const markCompleted = (songID) => {
+  const markCompleted = async (songID) => {
     console.log("mark completed");
     console.log(songID);
 
-    songs.map((song) => {
+    songs.map(async (song) => {
       if (song.id === songID) {
         song.status = "Learned";
+        // send PUT request to the server
+        const response = await fetch(`/api/songs/${song.id}`, {
+          method: "PUT",
+          body: JSON.stringify(song),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
       }
     });
 
     setSongs([...songs]);
     setViewCardShowing(false);
-    // include animation with the mark as completed button if possible; (to show user that it worked)
   };
 
   const toggleMobileSidebar = (boolean) => {
