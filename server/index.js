@@ -4,6 +4,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
@@ -133,5 +134,10 @@ const practice = async () => {
   const dom = await new JSDOM(text);
   console.log(dom.window.document.querySelector("div").textContent);
 };
+
+// send all other get requests to return to react app
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+});
 
 practice();

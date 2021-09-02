@@ -54,7 +54,7 @@ const ViewCard = (props) => {
           ></iframe>
         )}
 
-        <div className="link-button-container mx-auto">
+        {/* <div className="link-button-container mx-auto">
           <button className="btn btn-outline-dark m-2 link-btn">
             Chords / Tabs
           </button>
@@ -70,9 +70,10 @@ const ViewCard = (props) => {
           <button className="btn btn-outline-dark m-2 link-btn">
             Listen on Soundcloud
           </button>
+          <p>{props.lyrics}</p>
           <br />
           <br />
-        </div>
+        </div> */}
 
         <div className="notes-container">
           <h6>

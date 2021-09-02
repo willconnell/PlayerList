@@ -17,7 +17,7 @@ const Sidebar = (props) => {
         filter={props.filter}
       />
 
-      <div className="list-group mt-3" id="list-tab" role="tablist">
+      {/* <div className="list-group mt-3" id="list-tab" role="tablist">
         <button
           className="list-group-item list-group-item-action active"
           id="list-home-list"
@@ -58,7 +58,7 @@ const Sidebar = (props) => {
         >
           Settings
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

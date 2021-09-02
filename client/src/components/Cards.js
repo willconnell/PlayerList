@@ -1,12 +1,11 @@
+import React from "react";
 import Card from "./Card.js";
-import Transition from "react-transition-group/Transition";
 
 const Cards = (props) => {
   return (
-    <>
+    <React.Fragment>
       {props.songs.map((song) => (
-        <>
-          {/* disable transition for now to fix bug  */}
+        <React.Fragment key={song.id}>
           {song.visible && (
             <Card
               id={song.id}
@@ -19,29 +18,9 @@ const Cards = (props) => {
               toggle={props.toggle}
             />
           )}
-          {/* <Transition
-            in={song.visible}
-            timeout={400}
-            mountOnEnter
-            unmountOnExit
-          >
-            {(state) => (
-              <Card
-                id={song.id}
-                name={song.name}
-                artist={song.artist}
-                chords={song.chords}
-                youtube={song.youtube}
-                status={song.status}
-                lyrics={song.lyrics}
-                toggle={props.toggle}
-                state={state}
-              />
-            )}
-          </Transition> */}
-        </>
+        </React.Fragment>
       ))}
-    </>
+    </React.Fragment>
   );
 };
 
