@@ -36,14 +36,13 @@ const EditModal = (props) => {
     // }
 
     const code = youtube.slice(-11);
-    const newlink = "https://www.youtube.com/embed/" + code;
 
     const song = {
       id: songid,
       name: songName,
       artist: artist,
       chords: chords,
-      youtube: newlink,
+      youtube: code,
       status: status,
       notes: notes,
       lyrics: lyrics,
