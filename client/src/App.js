@@ -229,7 +229,6 @@ function App() {
   const successCallback = async (result) => {
     console.log("SucCess", result);
     var newSong = {};
-    console.log(currentIDLookup);
 
     // set song.lyrics to result data & construct a newSong object with edits
     songs.map((song) => {
@@ -241,7 +240,7 @@ function App() {
         // console.log("executed");
         song.lyrics = result;
         newSong = {
-          id: currentIDLookup,
+          id: newestSong.id,
           name: song.name,
           artist: song.artist,
           chords: song.chords,
@@ -273,18 +272,10 @@ function App() {
     console.log("Error fulfilling promise:", error);
   };
 
-  // useEffect(() => {
-  //   setCurrentIDLookup(6);
-  //   console.log("after setting", currentIDLookup);
-  //   fetchGeniusData("The Thrill is Gone", "BB King").then(
-  //     successCallback,
-  //     failureCallback
-  //   );
-  // }, []);
-
   const fetchGeniusData = async (song_name, artist_name) => {
     // ACCESS TOKEN ---------------------------------------------------------------------
-    const accessToken = "";
+    const accessToken =
+      "qsdfz6yd1U341DT9dPiANrAN67MdHenvI_D8s9g-QnNdmie17u97MhuDrHBr4Upj";
 
     // query Genius API and return the first hit's song data
     const query = `${song_name.replaceAll(
