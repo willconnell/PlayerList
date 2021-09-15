@@ -12,6 +12,7 @@ const AddModal = (props) => {
   const [lyrics, setLyrics] = useState("");
 
   const onSubmit = (e) => {
+    e.preventDefault();
     // convert youtube link to 11 digit unique youtube id
     const code = youtube.slice(-11);
 

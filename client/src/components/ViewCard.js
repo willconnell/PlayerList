@@ -1,13 +1,43 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { BsX, BsCheck } from "react-icons/bs";
 
 const ViewCard = (props) => {
+  const [spotify, setSpotify] = useState(null);
+  const [soundcloud, setSoundcloud] = useState(null);
+  const [genius, setGenius] = useState(null);
+  const [youtube, setYoutube] = useState(null);
+
   const onEdit = () => {
     props.exit();
     // show addmodal card but with current information already filled in
     // create an editmodal component for ^this
     // call function defined in App.js to show the edit modal
     props.toggleEdit(props.song.id);
+  };
+
+  useEffect(() => {
+    showMedia();
+  }, []);
+
+  const showMedia = () => {
+    if (props.song.lyrics === "") {
+      console.log("lyrics is empty");
+    } else {
+      console.log(props.song.lyrics);
+      for (const media in props.song.lyrics) {
+        if (media === "genius") {
+          setGenius(props.song.lyrics[media]);
+        } else if (media === "soundcloud") {
+          setSoundcloud(props.song.lyrics[media]);
+        } else if (media === "spotify") {
+          setSpotify(props.song.lyrics[media]);
+        } else if (media === "youtube" && props.song.youtube === "") {
+          console.log("new youtube link set");
+          setYoutube(props.song.lyrics[media]);
+        }
+      }
+    }
   };
 
   // const markAsLearned = () => {
@@ -54,26 +84,40 @@ const ViewCard = (props) => {
           ></iframe>
         )}
 
-        {/* <div className="link-button-container mx-auto">
-          <button className="btn btn-outline-dark m-2 link-btn">
-            Chords / Tabs
-          </button>
+        <div>
+          {spotify != null && (
+            <a
+              className="btn btn-outline-dark m-2"
+              href={spotify}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Listen on Spotify
+            </a>
+          )}
           <br />
-          <button className="btn btn-outline-dark m-2 link-btn">
-            View Lyrics
-          </button>
+          {genius != null && (
+            <a
+              className="btn btn-outline-dark m-2"
+              href={genius}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View Lyrics
+            </a>
+          )}
           <br />
-          <button className="btn btn-outline-dark m-2 link-btn">
-            Listen on Spotify
-          </button>
-          <br />
-          <button className="btn btn-outline-dark m-2 link-btn">
-            Listen on Soundcloud
-          </button>
-          <p>{props.lyrics}</p>
-          <br />
-          <br />
-        </div> */}
+          {soundcloud != null && (
+            <a
+              className="btn btn-outline-dark m-2"
+              href={soundcloud}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Listen on Soundcloud
+            </a>
+          )}
+        </div>
 
         <div className="notes-container">
           <h6>

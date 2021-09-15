@@ -1,11 +1,11 @@
 const express = require("express");
-const path = require('path');
+const path = require("path");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(express.json());
-app.use(express.static(path.resolve(__dirname, '../client/build')));
+app.use(express.static(path.resolve(__dirname, "../client/build")));
 
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
@@ -44,7 +44,12 @@ let songs = [
     youtube: "lwlogyj7nFE",
     status: "To Learn",
     notes: "Some sample notes for Under the Bridge",
-    lyrics: "",
+    lyrics: {
+      spotify: "https://open.spotify.com/track/3d9DChrdc6BOeFsbrZ3Is0",
+      youtube: "http://www.youtube.com/watch?v=GLvohMXgcBo",
+      genius:
+        "https://genius.com/Red-hot-chili-peppers-under-the-bridge-lyrics",
+    },
     visible: true,
   },
   {
@@ -137,8 +142,8 @@ const practice = async () => {
 };
 
 // send all other get requests to return to react app
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
 });
 
 practice();

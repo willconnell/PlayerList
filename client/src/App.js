@@ -15,18 +15,17 @@ function App() {
   const [viewableSong, setViewableSong] = useState("");
   const [editShowing, setEditShowing] = useState(false);
   const [mobileSidebarShowing, setMobileSidebarShowing] = useState(false);
+  const [newestSong, setNewestSong] = useState({
+    id: null,
+    name: null,
+    artist: null,
+  });
   const [count, setCount] = useState({
     learned: 0,
     tolearn: 0,
     learning: 0,
   });
   const [songs, setSongs] = useState([]);
-
-  // practice call to the genius API
-  // useEffect(async () => {
-  //   const songMedia = await fetchGeniusData('pride and joy', 'stevie ray vaughan')
-  //   console.log('song media ISSSS', songMedia);
-  // }, []);
 
   // fetch songs from backend when app is initially rendered
   useEffect(() => {
@@ -37,7 +36,6 @@ function App() {
       .then((data) => {
         setSongs(data);
       });
-    // console.log("songs retrieved from backend");
   }, []);
 
   // count songs for sidebar numbers
@@ -62,6 +60,14 @@ function App() {
       learning: learning,
     });
   }, [songs]);
+
+  // call to Genius API when newestSong is updated (i.e. a song is added)
+  useEffect(() => {
+    fetchGeniusData(newestSong.name, newestSong.artist).then(
+      successCallback,
+      failureCallback
+    );
+  }, [newestSong]);
 
   const toggleAddShowing = () => {
     setAddShowing(!addShowing);
@@ -88,7 +94,7 @@ function App() {
   };
 
   const addSong = async (song) => {
-    // design: if user inputs youtube link, that link takes priority over 
+    // design: if user inputs youtube link, that link takes priority over
     // the fetched YT link from the genius API
 
     setAddShowing(false);
@@ -111,6 +117,13 @@ function App() {
       },
     ]);
 
+    // set newest song for Genius API call in useEffect() hook to access later
+    setNewestSong({
+      id: songs.length + 1,
+      name: song.name,
+      artist: song.artist,
+    });
+
     // send song data to backend server
     const response = await fetch("/api/songs", {
       method: "POST",
@@ -121,6 +134,14 @@ function App() {
       },
     });
     const data = await response.json();
+
+    // console.log("songs length", songs.length);
+    // currentIDLookup = songs.length + 1;
+    // console.log("ADD id", currentIDLookup);
+    // fetchGeniusData(song.name, song.artist).then(
+    //   successCallback,
+    //   failureCallback
+    // );
   };
 
   const saveEditedSong = async (newSong) => {
@@ -205,9 +226,65 @@ function App() {
     // console.log("toggle mobile sidebar clicked");
   };
 
+  const successCallback = async (result) => {
+    console.log("SucCess", result);
+    var newSong = {};
+    console.log(currentIDLookup);
+
+    // set song.lyrics to result data & construct a newSong object with edits
+    songs.map((song) => {
+      // console.log("code getting run");
+      console.log("song:", song);
+      console.log(song.id);
+      // console.log(song.id, currentIDLookup);
+      if (song.id === newestSong.id) {
+        // console.log("executed");
+        song.lyrics = result;
+        newSong = {
+          id: currentIDLookup,
+          name: song.name,
+          artist: song.artist,
+          chords: song.chords,
+          youtube: song.youtube,
+          status: song.status,
+          notes: song.notes,
+          lyrics: result,
+          visible: song.visible,
+        };
+        console.log(newSong);
+      }
+    });
+
+    console.log("newSong", newSong);
+
+    // store newSong object in backend
+    const response = await fetch(`/api/songs/${newestSong.id}`, {
+      method: "PUT",
+      body: JSON.stringify(newSong),
+      // FIXME: headers line might not be technically required
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+  };
+
+  const failureCallback = (error) => {
+    console.log("Error fulfilling promise:", error);
+  };
+
+  // useEffect(() => {
+  //   setCurrentIDLookup(6);
+  //   console.log("after setting", currentIDLookup);
+  //   fetchGeniusData("The Thrill is Gone", "BB King").then(
+  //     successCallback,
+  //     failureCallback
+  //   );
+  // }, []);
+
   const fetchGeniusData = async (song_name, artist_name) => {
     // ACCESS TOKEN ---------------------------------------------------------------------
-    const accessToken = "qsdfz6yd1U341DT9dPiANrAN67MdHenvI_D8s9g-QnNdmie17u97MhuDrHBr4Upj";
+    const accessToken = "";
 
     // query Genius API and return the first hit's song data
     const query = `${song_name.replaceAll(
@@ -220,10 +297,15 @@ function App() {
     console.log(data);
     // first result of search; currently no checking in place yet
     // If title of first result matches, then show the result
-    if (data.response.hits[0].result.title.toUpperCase().trim() === song_name.toUpperCase().trim()) {
-      console.log('MATCH FOUND')
+    if (
+      data.response.hits[0].result.title.toUpperCase().trim() ===
+      song_name.toUpperCase().trim()
+    ) {
+      // console.log("MATCH FOUND");
     } else {
-      console.log('No match found in the Genius Database. Double check spelling of song name and artist name.')
+      console.log(
+        "No match found in the Genius Database. Double check spelling of song name and artist name."
+      );
     }
 
     console.log(data.response.hits[0].result.full_title);
@@ -233,21 +315,21 @@ function App() {
     const song_data = await song_response.json();
     console.log("song data:", song_data);
 
-    const songMedia = {}
+    const songMedia = {};
 
     song_data.response.song.media.forEach((media_source) => {
       console.log(media_source.provider, "link is", media_source.url);
-      songMedia[`${media_source.provider}`] = `${media_source.url}`
+      songMedia[`${media_source.provider}`] = `${media_source.url}`;
     });
 
-    songMedia['genius'] = song_data.response.song.url;
+    songMedia["genius"] = song_data.response.song.url;
 
-    // console.log("genius link is ", song_data.response.song.url);
+    console.log("genius link is ", song_data.response.song.url);
 
-    // console.log('song media is ', songMedia)
+    console.log("song media is ", songMedia);
 
-    return songMedia
-  }
+    return songMedia;
+  };
 
   return (
     <div className="App">
@@ -299,7 +381,7 @@ function App() {
         )}
       </Transition>
 
-      <Transition in={addShowing} timeout={400} mountOnEnter unmountOnExit>
+      {/* <Transition in={addShowing} timeout={400} mountOnEnter unmountOnExit>
         {(state) => (
           <AddModal
             state={state}
@@ -307,10 +389,10 @@ function App() {
             onAddSong={addSong}
           />
         )}
-      </Transition>
+      </Transition> */}
 
       {/* FIXME: including below line until I can fix bug with the above transition */}
-      {/* {addShowing && <AddModal toggle={toggleAddShowing} onAddSong={addSong} />} */}
+      {addShowing && <AddModal toggle={toggleAddShowing} onAddSong={addSong} />}
 
       <Transition in={editShowing} timeout={400} mountOnEnter unmountOnExit>
         {(state) => (
