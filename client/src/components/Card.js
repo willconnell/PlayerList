@@ -33,7 +33,7 @@ const Card = (props) => {
             href={props.chords}
             target={props.chords !== "" ? "_blank" : ""}
             rel="noreferrer"
-            className="card-link"
+            className="card-link disabled"
           >
             Chords / Tabs
           </a>
@@ -49,7 +49,12 @@ const Card = (props) => {
             Youtube
           </a>
         </li>
-        <li className="list-group-item">Lyrics Available</li>
+        {/* <li className="list-group-item">Lyrics Available</li> */}
+        {props.lyrics !== "" ? (
+          <li className="list-group-item">Lyrics Available</li>
+        ) : (
+          <li className="list-group-item">Lyrics Unavailable</li>
+        )}
         <li className="list-group-item">Status: {props.status}</li>
       </ul>
     </div>

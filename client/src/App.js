@@ -134,14 +134,6 @@ function App() {
       },
     });
     const data = await response.json();
-
-    // console.log("songs length", songs.length);
-    // currentIDLookup = songs.length + 1;
-    // console.log("ADD id", currentIDLookup);
-    // fetchGeniusData(song.name, song.artist).then(
-    //   successCallback,
-    //   failureCallback
-    // );
   };
 
   const saveEditedSong = async (newSong) => {
@@ -232,25 +224,30 @@ function App() {
 
     // set song.lyrics to result data & construct a newSong object with edits
     songs.map((song) => {
-      // console.log("code getting run");
-      console.log("song:", song);
-      console.log(song.id);
-      // console.log(song.id, currentIDLookup);
       if (song.id === newestSong.id) {
-        // console.log("executed");
         song.lyrics = result;
+        if (song.youtube != "") {
+          var newYoutube = song.youtube;
+        } else {
+          console.log("we hit it");
+          for (const hit in result) {
+            if (hit === "youtube") {
+              console.log("yuh");
+              var newYoutube = result[hit].slice(-11);
+            }
+          }
+        }
         newSong = {
           id: newestSong.id,
           name: song.name,
           artist: song.artist,
           chords: song.chords,
-          youtube: song.youtube,
+          youtube: newYoutube,
           status: song.status,
           notes: song.notes,
           lyrics: result,
           visible: song.visible,
         };
-        console.log(newSong);
       }
     });
 
@@ -285,7 +282,7 @@ function App() {
     const uri = `https://api.genius.com/search?access_token=${accessToken}&q=${query}`;
     const search_response = await fetch(uri);
     const data = await search_response.json();
-    console.log(data);
+    // console.log(data);
     // first result of search; currently no checking in place yet
     // If title of first result matches, then show the result
     if (
@@ -299,26 +296,23 @@ function App() {
       );
     }
 
-    console.log(data.response.hits[0].result.full_title);
+    // console.log(data.response.hits[0].result.full_title);
     const api_path = data.response.hits[0].result.api_path;
     const song_uri = `https://api.genius.com${api_path}?access_token=${accessToken}`;
     const song_response = await fetch(song_uri);
     const song_data = await song_response.json();
-    console.log("song data:", song_data);
+    // console.log("song data:", song_data);
 
     const songMedia = {};
 
     song_data.response.song.media.forEach((media_source) => {
-      console.log(media_source.provider, "link is", media_source.url);
+      // console.log(media_source.provider, "link is", media_source.url);
       songMedia[`${media_source.provider}`] = `${media_source.url}`;
     });
 
     songMedia["genius"] = song_data.response.song.url;
-
-    console.log("genius link is ", song_data.response.song.url);
-
-    console.log("song media is ", songMedia);
-
+    // console.log("genius link is ", song_data.response.song.url);
+    // console.log("song media is ", songMedia);
     return songMedia;
   };
 

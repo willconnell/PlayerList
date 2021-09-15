@@ -34,7 +34,7 @@ const ViewCard = (props) => {
           setSpotify(props.song.lyrics[media]);
         } else if (media === "youtube" && props.song.youtube === "") {
           console.log("new youtube link set");
-          setYoutube(props.song.lyrics[media]);
+          setYoutube(props.song.lyrics[media].slice(-11));
         }
       }
     }
@@ -84,37 +84,65 @@ const ViewCard = (props) => {
           ></iframe>
         )}
 
+        {youtube !== null && (
+          <iframe
+            width="100%"
+            height="345"
+            src={`https://www.youtube.com/embed/${youtube}`}
+          ></iframe>
+        )}
+
         <div>
           {spotify != null && (
-            <a
-              className="btn btn-outline-dark m-2"
-              href={spotify}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Listen on Spotify
-            </a>
+            <>
+              <a
+                className="btn btn-outline-dark m-2"
+                href={spotify}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Listen on Spotify
+              </a>
+              <br />
+            </>
           )}
-          <br />
+
           {genius != null && (
-            <a
-              className="btn btn-outline-dark m-2"
-              href={genius}
-              target="_blank"
-              rel="noreferrer"
-            >
-              View Lyrics
-            </a>
+            <>
+              <a
+                className="btn btn-outline-dark m-2"
+                href={genius}
+                target="_blank"
+                rel="noreferrer"
+              >
+                View Lyrics
+              </a>
+              <br />
+            </>
           )}
-          <br />
+
           {soundcloud != null && (
+            <>
+              <a
+                className="btn btn-outline-dark m-2"
+                href={soundcloud}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Listen on Soundcloud
+              </a>
+              <br />
+            </>
+          )}
+
+          {props.song.chords != "" && (
             <a
               className="btn btn-outline-dark m-2"
-              href={soundcloud}
+              href={props.song.chords}
               target="_blank"
               rel="noreferrer"
             >
-              Listen on Soundcloud
+              View Tabs
             </a>
           )}
         </div>
