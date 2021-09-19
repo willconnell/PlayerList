@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const mysql = require("mysql");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -9,6 +10,22 @@ app.use(express.static(path.resolve(__dirname, "../client/build")));
 
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
+
+var connection = mysql.createConnection({
+  host: "localhost",
+  user: "u688913391_willc",
+  password: "Sultan+Baron&Glad1",
+  database: "u688913391_myDatabase",
+  // user: "u688913391_willc",
+  // password: "Sultan+Baron&Glad1",
+  // database: "u688913391_myDatabase",
+  // dbName : "u688913391_myDatabase";
+});
+
+connection.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
 
 // sample database for now below
 let songs = [
